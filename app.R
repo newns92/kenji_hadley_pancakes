@@ -10,7 +10,7 @@
 library(shiny)
 source("./ingredients.r")
 
-# Define UI for application that draws a histogram
+# Define UI for application
 ui <- fluidPage(
  
   # Application title
@@ -34,10 +34,14 @@ ui <- fluidPage(
              "and ",
              a("Shiny", href = "http://shiny.rstudio.com"), "."),
            
-           p("How servings?"),
+           p("How many people?"),
            numericInput("quantity", "", 1, min = 1),
-           p("(Makes  6-inch pancakes)"),
-           selectInput("units", "", names(units)),
+           p("(Makes 'xx' 6-inch pancakes)"),
+           selectInput(
+             inputId = "units",
+             label = "Substitutions if no buttermilk",
+             choices = c("None", "sour cream", "yogurt", "creme fraiche"),
+             selected = "None"), #names(units)),
            
            checkboxInput("variation", "Clyde common variation? (no rum)"),
            checkboxInput("nice", "Nice numbers? (makes vol approx)", TRUE),
