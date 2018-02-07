@@ -34,7 +34,12 @@ ui <-
       selectInput(inputId = "x", 
                   label = "X-axis:",
                   choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"), 
-                  selected = "critics_score") # default choice
+                  selected = "critics_score"), # default choice
+      # Select variable for color
+      selectInput(inputId = "z", 
+                  label = "Color by:",
+                  choices = c("title_type", "genre", "mpaa_rating", "critics_rating", "audience_rating"),
+                  selected = "mpaa_rating")
     ),
     
     # Sepcify area that contains Outputs
@@ -51,7 +56,7 @@ server <- function(input, output) {
   ### Render a reactive plot suitable for assigning to an output slot.
   # Create scatterplot object that the plotOutput function is expecting
   output$scatterplot <- renderPlot({ 
-        ggplot(data = movies, aes_string(x = input$x, y = input$y)) +
+        ggplot(data = movies, aes_string(x = input$x, y = input$y, color = input$z)) +
       geom_point()
   })
 }
