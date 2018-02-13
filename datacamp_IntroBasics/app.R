@@ -9,8 +9,10 @@
 
 library(shiny)
 library(ggplot2)
-# get data
+library(dplyr)
+## get data (outside UI + server definitions)
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_4850/datasets/movies.Rdata"))
+# data is now visible to UI and to server + we can refer to it by name to plot it
 
 ## Define UI for application that plots features of movies 
 ## Inputs, user selections, and outputs are laid out here 
@@ -58,14 +60,22 @@ ui <-
       sliderInput(inputId = "alpha", 
                   label = "Alpha:", 
                   min = 0, max = 1, 
-                  value = 0.5) 
+                  value = 0.5),
+    
+      ## new input widget = show as a table checkbox
+      checkboxInput(inputId = "show_data", 
+                  label = "Show data table:", 
+                  value = TRUE)
     ),
+  
     
     # Sepcify area that contains Outputs
     mainPanel(
       plotOutput(outputId = "scatterplot"),
       # add 2nd plot w/ specified height
-      plotOutput(outputId = "densityplot", height = 200)
+      plotOutput(outputId = "densityplot", height = 200),
+      # add 3rd object = data table if checkbox = TRUE
+      DT::dataTableOutput(outputId = "moviestable")
     )
   )
 )
@@ -86,6 +96,15 @@ server <- function(input, output) {
   output$densityplot <- renderPlot({
     ggplot(data = movies, aes_string(x = input$x)) +
       geom_density()
+  })
+  
+  ## Create data table
+  output$moviestable <- DT::renderDataTable({
+    if (input$show_data) {
+      DT::datatable(data = movies %>% select(1:7), # show 1st 7 columns
+                    options = list(pageLength = 10), # default number of records to show
+                    rownames = FALSE)
+    }
   })
   
 }
