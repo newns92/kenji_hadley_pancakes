@@ -34,18 +34,22 @@ ui <- fluidPage(
              "and ",
              a("Shiny", href = "http://shiny.rstudio.com"), "."),
            
-           p("How many people?"),
-           numericInput("quantity", "", 1, min = 1),
-           p("(Makes 'xx' 6-inch pancakes)"),
-           selectInput(
-             inputId = "units",
-             label = "Substitutions if no buttermilk",
-             choices = c("None", "sour cream", "yogurt", "creme fraiche"),
-             selected = "None"), #names(units)),
+           #p("How many people?"),
+           numericInput(inputId =  "quantity"
+                        ,label = "How many people?"
+                        ,value = 1  # default value
+                        ,min = 1),
            
-           checkboxInput("variation", "Clyde common variation? (no rum)"),
-           checkboxInput("nice", "Nice numbers? (makes vol approx)", TRUE),
-           checkboxInput("metric", "Would you like metric units?")
+           p("(1 serving makes four 6-inch pancakes)"),
+           
+           selectInput(inputId = "units"
+                       ,label = "Substitutions if no buttermilk"
+                       ,choices = c("None", "sour cream", "yogurt", "creme fraiche")
+                       ,selected = "None")#, #names(units)),
+           
+           #checkboxInput("variation", "Clyde common variation? (no rum)"),
+           #checkboxInput("nice", "Nice numbers? (makes vol approx)", TRUE),
+          # checkboxInput("metric", "Would you like metric units?")
     ),
     column(width = 5,
            h2("Ingredients"),

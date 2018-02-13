@@ -58,7 +58,9 @@ scale <- function(ingredients, quantity = 1, grams = T, ml = F) {
     #return 
     ingredients
   }
-  
+
+#print(scale(dry))
+
 # units <- c(
 #     "serving" = 10,
 #     "oz" = 1,
