@@ -30,9 +30,12 @@ ui <- fluidPage(
              ", developed ", 
              a("Hadley Wickham", href = "https://twitter.com/hadleywickham"), 
              ", with the help of ",
-             a("R", href = "https://www.r-project.org/"),
-             "and ",
-             a("Shiny", href = "http://shiny.rstudio.com"), "."),
+             a(img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
+                href = "https://www.r-project.org/"),
+             "by",
+             a(img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30px"),
+                href = "http://shiny.rstudio.com"),
+              "."),
            
            #p("How many people?"),
            numericInput(inputId =  "quantity"
