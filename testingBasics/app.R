@@ -8,10 +8,11 @@
 #
 
 library(shiny)
+source("../ingredients.r")
 
-# Define UI for application
+# Define UI for application that draws a histogram
 ui <- fluidPage(
- 
+   
   # Application title
   titlePanel("The Best Light and Fluffy Buttermilk Pancakes"),
   
@@ -23,18 +24,18 @@ ui <- fluidPage(
              "from ", 
              a("J. Kenji López-Alt", href = "https://twitter.com/kenjilopezalt"), 
              "."
-            ),
+           ),
            p("Application inspired by",
              a("eggnogr", href = "https://hadley.shinyapps.io/eggnogr/"), 
              ", developed ", 
              a("Hadley Wickham", href = "https://twitter.com/hadleywickham"), 
              ", with the help of ",
              a(img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
-                href = "https://www.r-project.org/"),
+               href = "https://www.r-project.org/"),
              "by",
              a(img(src = "https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gray.png", height = "30px"),
-                href = "http://shiny.rstudio.com"),
-              "."),
+               href = "http://shiny.rstudio.com"),
+             "."),
            
            #p("How many people?"),
            numericInput(inputId =  "quantity"
@@ -51,55 +52,33 @@ ui <- fluidPage(
            
            #checkboxInput("variation", "Clyde common variation? (no rum)"),
            #checkboxInput("nice", "Nice numbers? (makes vol approx)", TRUE),
-           #checkboxInput("grams", "Use weight (grams)")
+           # checkboxInput("metric", "Would you like metric units?")
     ),
-    column(width = 5,
-           h2("Ingredients"),
-           tableOutput(outputId = "dry_ingredients"),  
-           p("(all units by volume, not weight)"),
-           h2("Instructions"),
-           tags$ol(
-             tags$li("Beat eggs in blender for one minute on medium speed."),
-             tags$li("Slowly add sugar and blend for one additional minute."),
-             tags$li("With blender still running, add nutmeg, brandy, rum, milk and cream until combined."),
-             tags$li("Chill thoroughly to allow flavors to combine."),
-             tags$li("Serve in chilled wine glasses or champagne coupes, grating additional ",
-                     "nutmeg on top immediately before serving.")
-           )
-    )
-  ),
-  p(a("Read the source", href = "https://github.com/hadley/eggnogr"))
-  
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+        tableOutput(outputId = "ingredients")
+      )
+   )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-  source("./ingredients.r")
+  source("../ingredients.r")
   
-  # create a reactive data frame based on which type of ingredients are chosen
-  dry_ingredients_df <- reactive(
+  #dry <- data.frame(
+   # quantity = c(10, 1, 0.5, 1, 1),
+  #  unit = c("oz", "tsp", "tsp", "tsp", "tbsp"),
+   # ingredient = c("All-Purpose Flour", "Baking Powder", "Baking Soda",
+   #                "Kosher Salt", "Sugar"),
+   # stringsAsFactors = FALSE
+  #)
+  
+  output$ingredients <- renderTable({
     dry
-  )
-  wet_ingredients_df <- reactive(
-    if (input$variation) variation else basic
-  )
-  
-  scaled <- reactive({
-    # use reactive dataframe as input for scale function from ingredients.R file
-    df <- scale(dry_ingredients_df(), input$quantity, grams = T,#input$grams,
-                ml = F)#input$ml)
-    df$quantity <- format(df$quantity, drop0trailing = TRUE)
-    df
-  })
-  # render the ingredients table
-  output$dry_ingredients <- renderTable(scaled(), 
-                                    align = "rrl",
-                                    include.rownames = FALSE,
-                                    include.colnames = FALSE
-                                    )
-   
+   })
 }
 
-# Run the application (ALWAYS LAST LINE IN FILE)
+# Run the application 
 shinyApp(ui = ui, server = server)
 

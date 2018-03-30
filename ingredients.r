@@ -58,7 +58,8 @@ scale <- function(ingredients, quantity = 1, grams = T, ml = F) {
     #return 
     ingredients
   }
-
+}
+#
 #print(scale(dry))
 
 # units <- c(
@@ -77,4 +78,4 @@ scale <- function(ingredients, quantity = 1, grams = T, ml = F) {
 #}
  # print(ingredients)
  # print(cakes)
-}
+#}
