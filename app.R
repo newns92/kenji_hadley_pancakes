@@ -29,7 +29,7 @@ ui <- fluidPage(
            
            #p("How many people?"),
            numericInput(inputId =  "quantity"
-                        ,label = "How many people?"
+                        ,label = "How many servings?"
                         ,value = 1  # default value
                         ,min = 1),
            
@@ -38,11 +38,11 @@ ui <- fluidPage(
            selectInput(inputId = "wet_base"
                        ,label = "Substitutions if no buttermilk"
                        ,choices = c("None", "sour cream", "yogurt", "creme fraiche")
-                       ,selected = "None")#, #names(units)),
+                       ,selected = "None"),
            
-           #checkboxInput("variation", "Clyde common variation? (no rum)"),
-           #checkboxInput("nice", "Nice numbers? (makes vol approx)", TRUE),
-           #checkboxInput("grams", "Use weight (grams)")
+           #checkboxInput("ml", "Using mL?", F),
+           checkboxInput("ml", "Using mL?", F),
+           checkboxInput("grams", "Use weight (grams)", T)
     ),
     column(width = 5,
            h3("Dry Ingredients"),

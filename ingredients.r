@@ -44,38 +44,20 @@ cremeFraiche <- data.frame(
 
 scale <- function(ingredients, quantity = 1, grams = T, ml = F) {
   
-  cakes <- quantity * 4
-  
+  #cakes <- quantity * 4
+  #by <- quantity * to_oz(unit) / 10
+  ingredients$quantity <- ingredients$quantity * quantity
+
   if (grams) {
     in_oz <- ingredients$unit == "oz"
     ingredients$quantity[in_oz] <- round(ingredients$quantity[in_oz] * 28.3495231)
     ingredients$unit[in_oz] <- "grams"
-    if (ml) {
-      in_floz <- ingredients$unit == "fl. oz"
-      ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] * 29.5735296)
-      ingredients$unit[in_oz] <- "mL"    
-    }
-    #return 
-    ingredients
   }
+  if (ml) {
+    in_floz <- ingredients$unit == "fl. oz"
+    ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] * 29.5735296)
+    ingredients$unit[in_oz] <- "mL"    
+  }
+  #return 
+  ingredients
 }
-#
-#print(scale(dry))
-
-# units <- c(
-#     "serving" = 10,
-#     "oz" = 1,
-#     "cup" = 8,
-#     "quart" = 32,
-#     "gallon" = 128
-#   )
-  
-  #to_oz <- function(unit) {
-  #  units[[unit]]
-  #}
-  #from_oz <- function(unit) {
-  #  1 / units[[unit]]
-#}
- # print(ingredients)
- # print(cakes)
-#}
