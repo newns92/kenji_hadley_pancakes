@@ -1,12 +1,3 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 
 # Define UI for application
@@ -44,7 +35,7 @@ ui <- fluidPage(
            
            p("(1 serving makes four 6-inch pancakes)"),
            
-           selectInput(inputId = "units"
+           selectInput(inputId = "wet_base"
                        ,label = "Substitutions if no buttermilk"
                        ,choices = c("None", "sour cream", "yogurt", "creme fraiche")
                        ,selected = "None")#, #names(units)),
@@ -54,8 +45,11 @@ ui <- fluidPage(
            #checkboxInput("grams", "Use weight (grams)")
     ),
     column(width = 5,
-           h2("Ingredients"),
+           h3("Dry Ingredients"),
            tableOutput(outputId = "dry_ingredients"),  
+           h3("Wet Ingredients"),
+           tableOutput(outputId = "wet_ingredients"), 
+           tableOutput(outputId = "syrup"),
            p("(all units by volume, not weight)"),
            h2("Instructions"),
            tags$ol(
@@ -81,23 +75,38 @@ server <- function(input, output) {
     dry
   )
   wet_ingredients_df <- reactive(
-    if (input$variation) variation else basic
+    if (input$wet_base == "sour cream") sourCream 
+    else if (input$wet_base == "yogurt") yogurt
+    else if (input$wet_base == "creme fraiche") cremeFraiche
+    else buttermilk
   )
   
-  scaled <- reactive({
+  scaled_dry <- reactive({
     # use reactive dataframe as input for scale function from ingredients.R file
     df <- scale(dry_ingredients_df(), input$quantity, grams = T,#input$grams,
                 ml = F)#input$ml)
     df$quantity <- format(df$quantity, drop0trailing = TRUE)
     df
   })
+  scaled_wet <- reactive({
+    # use reactive dataframe as input for scale function from ingredients.R file
+    df <- scale(wet_ingredients_df(), input$quantity, grams = T,#input$grams,
+                ml = F)#input$ml)
+    df$quantity <- format(df$quantity, drop0trailing = TRUE)
+    df
+  })
   # render the ingredients table
-  output$dry_ingredients <- renderTable(scaled(), 
+  output$dry_ingredients <- renderTable(scaled_dry(), 
                                     align = "rrl",
                                     include.rownames = FALSE,
                                     include.colnames = FALSE
                                     )
-   
+  # render the ingredients table
+  output$wet_ingredients <- renderTable(scaled_wet(), 
+                                        align = "rrl",
+                                        include.rownames = FALSE,
+                                        include.colnames = FALSE
+  )
 }
 
 # Run the application (ALWAYS LAST LINE IN FILE)

@@ -8,7 +8,7 @@ dry <- data.frame(
 
 #head(dry)
 
-wet <- data.frame(
+buttermilk <- data.frame(
   quantity = c(2, 12, 8, 4, NA),
   unit = c("", "fl. oz", "oz", "tbsp", ""),
   ingredient = c("Large Eggs (Yolks seperated)", "Buttermilk", "Sour Cream",
@@ -37,7 +37,7 @@ sourCream <- data.frame(
 cremeFraiche <- data.frame(
   quantity = c(2, 4, 4, 12, 4, NA),
   unit = c("", "fl. oz", "oz", "oz", "tbsp", ""),
-  ingredient = c("Large Eggs (Yolks seperated)", "Milk", "Crème Fraîche", "Sour Cream",
+  ingredient = c("Large Eggs (Yolks seperated)", "Milk", "Creme Fraiche", "Sour Cream",
                  "Unsalted Butter (with some more for serving)", "Warm Maple Syrup"),
   stringsAsFactors = FALSE
 )
