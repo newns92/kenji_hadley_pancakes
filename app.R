@@ -53,12 +53,24 @@ ui <- fluidPage(
            p("(all units by volume, not weight)"),
            h2("Instructions"),
            tags$ol(
-             tags$li("Beat eggs in blender for one minute on medium speed."),
-             tags$li("Slowly add sugar and blend for one additional minute."),
-             tags$li("With blender still running, add nutmeg, brandy, rum, milk and cream until combined."),
-             tags$li("Chill thoroughly to allow flavors to combine."),
-             tags$li("Serve in chilled wine glasses or champagne coupes, grating additional ",
-                     "nutmeg on top immediately before serving.")
+             tags$li("Combine flour, baking powder, baking soda, salt, and sugar in a large bowl and whisk until 
+                     homogenous (If using later, transfer to an airtight container, as mix will stay good for
+                     3 months)."),
+             tags$li("In a medium clean bowl, whisk egg whites until stiff peaks form."),
+             tags$li("In a large bowl, whisk egg yolks, buttermilk (or buttermilk substitute ingredients), and sour
+                      cream until homogenous."),
+             tags$li("Slowly drizzle in the melted butter while still whisking."),
+             tags$li("Carefully fold in the egg whites with a rubber spatula until just combined."),
+             tags$li("Pour the wet mixture over the dry mix and fold until just combined (leave plenty of lumps)."),
+             tags$li("Heat a large, heavy-bottomed nonstick skillet over medium heat for 5 minutes (or use an 
+                     electric griddle), adding a small amount of butter or oil and spreading with a paper towel 
+                     until no visible butter or oil remains."),
+             tags$li("Pour a 1/4-cup measurements of the batter into the skillet and cook until bubbles start to
+                     appear on top, and the bottoms are golden brown (about 2 minutes)."),
+             tags$li("Carefully flip the pancakes and cook on the second side until golden brown and completely 
+                     set (about 2 minutes longer)."),
+             tags$li("Serve pancakes immediately with warm maple syrup and butter, or keep warm on a wire rack set on a rimmed baking sheet in a warm
+                     oven while you cook the remaining pancakes.")
            )
     )
   ),
