@@ -1,7 +1,10 @@
 library(shiny)
-
+library(utils)
+cf <- enc2utf8(as("Crème fraîche", "character")) # used to add accents for creme fraiche
 # Define UI for application
 ui <- fluidPage(
+  # theme
+  theme = shinythemes::shinytheme("sandstone"),
  
   # Application title
   titlePanel("The Best Light and Fluffy Buttermilk Pancakes"),
@@ -14,7 +17,7 @@ ui <- fluidPage(
              "from ", 
              a("J. Kenji López-Alt", href = "https://twitter.com/kenjilopezalt"), 
              "."
-            ),
+            ), 
            p("Application inspired by",
              a("eggnogr", href = "https://hadley.shinyapps.io/eggnogr/"), 
              ", developed ", 
@@ -29,18 +32,19 @@ ui <- fluidPage(
            
            #p("How many people?"),
            numericInput(inputId =  "quantity"
-                        ,label = "How many servings?"
+                        ,label = "How many batches?"
                         ,value = 1  # default value
                         ,min = 1),
            
-           p("(1 serving makes four 6-inch pancakes)"),
+           p("(1 batch makes sixteen 6-inch pancakes)"),
+           
            
            selectInput(inputId = "wet_base"
                        ,label = "Substitutions if no buttermilk"
-                       ,choices = c("None", "sour cream", "yogurt", "creme fraiche")
+                       ,choices = c("None", "Sour Cream", "Yogurt", cf)
                        ,selected = "None"),
            
-           #checkboxInput("ml", "Using mL?", F),
+           checkboxInput("cup", "Use cups instead of weight?", F),
            checkboxInput("ml", "Using mL?", F),
            checkboxInput("grams", "Use weight (grams)", T)
     ),
@@ -89,21 +93,21 @@ server <- function(input, output) {
   wet_ingredients_df <- reactive(
     if (input$wet_base == "sour cream") sourCream 
     else if (input$wet_base == "yogurt") yogurt
-    else if (input$wet_base == "creme fraiche") cremeFraiche
+    else if (input$wet_base == cf) cremeFraiche
     else buttermilk
   )
   
   scaled_dry <- reactive({
     # use reactive dataframe as input for scale function from ingredients.R file
-    df <- scale(dry_ingredients_df(), input$quantity, grams = T,#input$grams,
-                ml = F)#input$ml)
+    df <- scale(dry_ingredients_df(), input$quantity, input$grams,
+                input$ml)
     df$quantity <- format(df$quantity, drop0trailing = TRUE)
     df
   })
   scaled_wet <- reactive({
     # use reactive dataframe as input for scale function from ingredients.R file
-    df <- scale(wet_ingredients_df(), input$quantity, grams = T,#input$grams,
-                ml = F)#input$ml)
+    df <- scale(wet_ingredients_df(), input$quantity, input$grams,
+                input$ml)
     df$quantity <- format(df$quantity, drop0trailing = TRUE)
     df
   })
