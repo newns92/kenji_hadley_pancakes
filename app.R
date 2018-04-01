@@ -10,12 +10,12 @@ ui <- fluidPage(
   titlePanel("The Best Light and Fluffy Buttermilk Pancakes"),
   # Sidebar layout with a input and output definitions
   sidebarLayout(# Inputs
-    sidebarPanel(
+    sidebarPanel(width = 3,
     #fluidRow(
      # column(width = 4, 
              p(
                a("Recipe ",
-                 href = "https://http://www.seriouseats.com/recipes/2010/06/light-and-fluffy-pancakes-recipe.html"), 
+                 href = "https://www.seriouseats.com/2015/05/the-food-lab-how-to-make-the-best-buttermilk-pancakes.html"), 
                "from ", 
                a("J. Kenji López-Alt", href = "https://twitter.com/kenjilopezalt"), 
                "."
@@ -38,45 +38,43 @@ ui <- fluidPage(
                           ,value = 1  # default value
                           ,min = 1),
              
-             p("(1 batch makes sixteen 6-inch pancakes)"),
+             p(tags$i("(1 batch makes sixteen 6-inch pancakes)")),
              
              
              selectInput(inputId = "wet_base"
-                         ,label = "Substitutions if no buttermilk"
+                         ,label = "Substitutions if not using buttermilk"
                          ,choices = c("None", "Sour Cream", "Yogurt", cf)
                          ,selected = "None"),
              
-             radioButtons(inputId="fluid_unit", label="What would you like to see?", 
-                          choices=c("Cups","fl.oz","mL")),
+             radioButtons(inputId="fluid_unit", label="Fluid Measurement", 
+                          choices=c("Cups","Fl. oz","mL")),
              radioButtons(inputId="weight_v_vol", label="Weight or volume", 
                           choices=c("Cups","Oz.","Grams")),
-             #checkboxInput("cups", "Use volume (cups)", F),
-             #checkboxInput("ml", "Using mL?", F),
-             #checkboxInput("grams", "Use weight (grams)", T)
-             p(a("Read the source", href = "https://github.com/hadley/eggnogr"))),
-    #)),
-    mainPanel(
+             
+             p(a("Source code", href = "https://github.com/newns92/kenji_hadley_pancakes"))),
+    
+    mainPanel(width=9,
       fluidRow(column(width = 3,
              h3("Dry Ingredients"),
-             tableOutput(outputId = "dry_ingredients")),  
+             tableOutput(outputId = "dry_ingredients")), 
+      column(width = 1),
       column(width = 4,       h3("Wet Ingredients"),
              tableOutput(outputId = "wet_ingredients"))),
       fluidRow(             
              h2("Instructions"),
              tags$ol(
                tags$li("Combine flour, baking powder, baking soda, salt, and sugar in a large bowl and whisk until 
-                       homogenous (If using later, transfer to an airtight container, as mix will stay good for
-                       3 months)."),
-               tags$li("In a medium clean bowl, whisk egg whites until stiff peaks form."),
+                       homogenous (Mix will stay good for
+                       3 months in an airtight container)."),
+               tags$li("In a clean medium bowl, whisk egg whites until stiff peaks form."),
                tags$li("In a large bowl, whisk egg yolks, buttermilk (or buttermilk substitute ingredients), and sour
                         cream until homogenous."),
                tags$li("Slowly drizzle in the melted butter while still whisking."),
                tags$li("Carefully fold in the egg whites with a rubber spatula until just combined."),
                tags$li("Pour the wet mixture over the dry mix and fold until just combined (leave plenty of lumps)."),
-               tags$li("Heat a large, heavy-bottomed nonstick skillet over medium heat for 5 minutes (or use an 
-                       electric griddle), adding a small amount of butter or oil and spreading with a paper towel 
-                       until no visible butter or oil remains."),
-               tags$li("Pour a 1/4-cup measurements of the batter into the skillet and cook until bubbles start to
+               tags$li("Heat a large nonstick skillet or electric griddle over medium for 5 minutes, adding a small 
+                        amount of butter or oil and spreading with a paper towel until no visible butter or oil remains."),
+               tags$li("Pour a 1/4-cup measurement of the batter into the skillet and cook until bubbles start to
                        appear on top, and the bottoms are golden brown (about 2 minutes)."),
                tags$li("Carefully flip the pancakes and cook on the second side until golden brown and completely 
                        set (about 2 minutes longer)."),
