@@ -44,7 +44,7 @@ ui <- fluidPage(
                        ,choices = c("None", "Sour Cream", "Yogurt", cf)
                        ,selected = "None"),
            
-           checkboxInput("cup", "Use cups instead of weight?", F),
+           checkboxInput("cups", "Use volume (cups)", F),
            checkboxInput("ml", "Using mL?", F),
            checkboxInput("grams", "Use weight (grams)", T)
     ),
@@ -91,8 +91,8 @@ server <- function(input, output) {
     dry
   )
   wet_ingredients_df <- reactive(
-    if (input$wet_base == "sour cream") sourCream 
-    else if (input$wet_base == "yogurt") yogurt
+    if (input$wet_base == "Sour Cream") sourCream 
+    else if (input$wet_base == "Yogurt") yogurt
     else if (input$wet_base == cf) cremeFraiche
     else buttermilk
   )
@@ -100,14 +100,14 @@ server <- function(input, output) {
   scaled_dry <- reactive({
     # use reactive dataframe as input for scale function from ingredients.R file
     df <- scale(dry_ingredients_df(), input$quantity, input$grams,
-                input$ml)
+                input$ml, input$cups)
     df$quantity <- format(df$quantity, drop0trailing = TRUE)
     df
   })
   scaled_wet <- reactive({
     # use reactive dataframe as input for scale function from ingredients.R file
     df <- scale(wet_ingredients_df(), input$quantity, input$grams,
-                input$ml)
+                input$ml, input$cups)
     df$quantity <- format(df$quantity, drop0trailing = TRUE)
     df
   })
@@ -123,6 +123,14 @@ server <- function(input, output) {
                                         include.rownames = FALSE,
                                         include.colnames = FALSE
   )
+  # Display data table tab only if show_data is checked
+    observeEvent(input$show_data, { # if show_data is checked
+    if(input$show_data){
+      showTab(inputId = "tabspanel", target = "Data", select = TRUE)
+    } else {
+      hideTab(inputId = "tabspanel", target = "Data")
+    }
+  })
 }
 
 # Run the application (ALWAYS LAST LINE IN FILE)

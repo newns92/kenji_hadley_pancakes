@@ -42,7 +42,7 @@ cremeFraiche <- data.frame(
   stringsAsFactors = FALSE
 )
 
-scale <- function(ingredients, quantity = 1, grams = T, ml = F) {
+scale <- function(ingredients, quantity = 1, grams = T, ml = F, cups = F) {
   
   #cakes <- quantity * 4
   #by <- quantity * to_oz(unit) / 10
@@ -57,15 +57,24 @@ scale <- function(ingredients, quantity = 1, grams = T, ml = F) {
     ingredients$quantity[in_oz] <- round(ingredients$quantity[in_oz])
   }
   if (ml) {
+    # uncheck cups
     in_floz <- ingredients$unit == "fl. oz"
     ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] * 29.5735296)
     ingredients$unit[in_floz] <- "mL"    
   }
- # if (cups) {
- #   in_oz <- ingredients$unit == "oz"
- #   ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] * 29.5735296)
- #   ingredients$unit[in_floz] <- "cups"    
-  #}
+  if (cups) {
+    flr <- ingredients$ingredient == "All-Purpose Flour"
+    ingredients$quantity[flr] <- round(ingredients$quantity[flr] / 5,1)
+    ingredients$unit[flr] <- "cups"
+    
+    sc <- ingredients$ingredient == "Sour Cream"
+    ingredients$quantity[sc] <- round(ingredients$quantity[sc] / 8,1)
+    ingredients$unit[sc] <- "cups"
+    
+    in_floz <- ingredients$unit == "fl. oz"
+    ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] / 8,1)
+    ingredients$unit[in_floz] <- "cups"
+  }
   #return 
   ingredients
 }
