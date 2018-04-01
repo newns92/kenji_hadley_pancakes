@@ -22,7 +22,7 @@ ui <- fluidPage(
              a("eggnogr", href = "https://hadley.shinyapps.io/eggnogr/"), 
              ", developed ", 
              a("Hadley Wickham", href = "https://twitter.com/hadleywickham"), 
-             ", with the help of ",
+             ", using ",
              a(img(src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny.png", height = "30px"),
                 href = "https://www.r-project.org/"),
              "by",
@@ -44,17 +44,20 @@ ui <- fluidPage(
                        ,choices = c("None", "Sour Cream", "Yogurt", cf)
                        ,selected = "None"),
            
-           checkboxInput("cups", "Use volume (cups)", F),
-           checkboxInput("ml", "Using mL?", F),
-           checkboxInput("grams", "Use weight (grams)", T)
+           radioButtons(inputId="fluid_unit", label="What would you like to see?", 
+                        choices=c("Cups","fl.oz","mL")),
+           radioButtons(inputId="weight_v_vol", label="Weight or volume", 
+                        choices=c("Cups","Oz.","Grams"))
+           #checkboxInput("cups", "Use volume (cups)", F),
+           #checkboxInput("ml", "Using mL?", F),
+           #checkboxInput("grams", "Use weight (grams)", T)
     ),
     column(width = 5,
            h3("Dry Ingredients"),
            tableOutput(outputId = "dry_ingredients"),  
            h3("Wet Ingredients"),
-           tableOutput(outputId = "wet_ingredients"), 
-           tableOutput(outputId = "syrup"),
-           p("(all units by volume, not weight)"),
+           tableOutput(outputId = "wet_ingredients"),
+           
            h2("Instructions"),
            tags$ol(
              tags$li("Combine flour, baking powder, baking soda, salt, and sugar in a large bowl and whisk until 
@@ -99,15 +102,15 @@ server <- function(input, output) {
   
   scaled_dry <- reactive({
     # use reactive dataframe as input for scale function from ingredients.R file
-    df <- scale(dry_ingredients_df(), input$quantity, input$grams,
-                input$ml, input$cups)
+    df <- scale(dry_ingredients_df(), input$quantity, input$fluid_unit,
+                input$weight_v_vol)
     df$quantity <- format(df$quantity, drop0trailing = TRUE)
     df
   })
   scaled_wet <- reactive({
     # use reactive dataframe as input for scale function from ingredients.R file
-    df <- scale(wet_ingredients_df(), input$quantity, input$grams,
-                input$ml, input$cups)
+    df <- scale(wet_ingredients_df(), input$quantity, input$fluid_unit,
+                input$weight_v_vol)
     df$quantity <- format(df$quantity, drop0trailing = TRUE)
     df
   })
