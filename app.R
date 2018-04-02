@@ -120,15 +120,6 @@ server <- function(input, output) {
   # render the ingredients table
   output$wet_ingredients <- renderTable(scaled_wet(), align = "rrl", include.rownames = FALSE, include.colnames = FALSE
   )
-  
-  # Display data table tab only if show_data is checked
-    observeEvent(input$show_data, { # if show_data is checked
-    if(input$show_data){
-      showTab(inputId = "tabspanel", target = "Data", select = TRUE)
-    } else {
-      hideTab(inputId = "tabspanel", target = "Data")
-    }
-  })
 }
 
 # Run the application (ALWAYS LAST LINE IN FILE)
