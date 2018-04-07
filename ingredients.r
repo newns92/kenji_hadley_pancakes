@@ -17,7 +17,7 @@ buttermilk <- data.frame(
 )
 
 yogurt <- data.frame(
-  quantity = c(2, round(300/28), 5, 8, 4),
+  quantity = c(2, round(300 / 28), 5, 8, 4),
   unit = c("", "oz", "fl. oz", "oz", "tbsp"),
   ingredient = c("Large Eggs (yolks seperated)", "Yogurt", "Milk", "Sour Cream",
                  "Unsalted Butter"),
@@ -42,11 +42,12 @@ cremeFraiche <- data.frame(
 
 ## Function to scale ingredients based on number of batches selected
 ##  by user and measurement options for volume and weight ####
-scale_ingredients <- function(ingredients, quantity = 1,  fluid_unit = "fl. oz", weight_v_vol = "Grams") {
+scale_ingredients <- function(ingredients, quantity = 1,
+                              fluid_unit = "fl. oz", weight_v_vol = "Grams") {
 
   # increase quantity based on user selections of batches
   ingredients$quantity <- ingredients$quantity * quantity
-  
+
   # update ingredients baed on radiobuttons
   if (weight_v_vol == "Grams") {
     # get those ingredients currently in oz
@@ -55,37 +56,37 @@ scale_ingredients <- function(ingredients, quantity = 1,  fluid_unit = "fl. oz",
     ingredients$quantity[in_oz] <- round(ingredients$quantity[in_oz] * 28.3495231)
     # reset units from oz to grams
     ingredients$unit[in_oz] <- "grams"
-  } 
+  }
   else if (weight_v_vol == "Cups") {
-    # get the 2 ingredients currently in cups (flour, sour cream) and convert 
+    # get the 2 ingredients currently in cups (flour, sour cream) and convert
     # to cups specified by recipe
     flr <- ingredients$ingredient == "All-Purpose Flour"
     sc <- ingredients$ingredient == "Sour Cream"
-    
-    ingredients$quantity[flr] <- round(ingredients$quantity[flr] / 5,1)
-    ingredients$quantity[sc] <- round(ingredients$quantity[sc] / 8,1)
+
+    ingredients$quantity[flr] <- round(ingredients$quantity[flr] / 5, 1)
+    ingredients$quantity[sc] <- round(ingredients$quantity[sc] / 8, 1)
     # change units for flour and sour cream to cups
     ingredients$unit[flr] <- "cups"
     ingredients$unit[sc] <- "cups"
-  } 
+  }
   else {
     # make units round number
     in_oz <- ingredients$unit == "oz"
     ingredients$quantity[in_oz] <- round(ingredients$quantity[in_oz])
   }
-  
+
   if (fluid_unit == "mL") {
     # convert from fl. oz to mL if checked, change 'units' text
     in_floz <- ingredients$unit == "fl. oz"
     ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] * 29.5735296)
-    ingredients$unit[in_floz] <- "mL"    
-  } 
+    ingredients$unit[in_floz] <- "mL"
+  }
   # convert from fl. oz to cups if checked, change 'units' text
-  else if (fluid_unit == "Cups") { 
+  else if (fluid_unit == "Cups") {
         in_floz <- ingredients$unit == "fl. oz"
-        ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] / 8,1)
+        ingredients$quantity[in_floz] <- round(ingredients$quantity[in_floz] / 8, 1)
         ingredients$unit[in_floz] <- "cups"
   }
-  
+
   ingredients
 }
