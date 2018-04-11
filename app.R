@@ -3,7 +3,7 @@ library(shiny)
 library(utils)
 
 # add accents for creme fraiche
-cf <- enc2utf8(as("Crème fraîche", "character")) 
+#cf <- enc2utf8(as("Crème fraîche", "character")) 
 
 # Define UI for application ####
 ui <- fluidPage(
@@ -46,7 +46,8 @@ ui <- fluidPage(
 
       selectInput(inputId = "wet_base"
           ,label="Substitutions if not using buttermilk"
-          ,choices=c("None" = "none", "Sour Cream" = "sc", "Yogurt" = "yogurt", cf)
+          ,choices=c("None" = "none", "Sour Cream" = "sc"
+                     ,"Yogurt" = "yogurt", "Creme Fraiche" = "cf")
           ,selected="None"),
 
       radioButtons(inputId="fluid_unit"
@@ -110,7 +111,7 @@ server <- function(input, output) {
   wet_ingredients_df <- reactive(
     if (input$wet_base == "sc") sourCream
     else if (input$wet_base == "yogurt") yogurt
-    else if (input$wet_base == cf) cremeFraiche
+    else if (input$wet_base == "cf") cremeFraiche
     else buttermilk
   )
 

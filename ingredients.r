@@ -65,12 +65,19 @@ scale_ingredients <- function(ingredients, quantity = 1,
     # to cups specified by recipe
     flr <- ingredients$ingredient == "All-Purpose Flour"
     sc <- ingredients$ingredient == "Sour Cream"
+    yog <- ingredients$ingredient == "Yogurt"
+    cf <- ingredients$ingredient == "Creme Fraiche"
 
     ingredients$quantity[flr] <- round(ingredients$quantity[flr] / 5, 1)
     ingredients$quantity[sc] <- round(ingredients$quantity[sc] / 8, 1)
+    ingredients$quantity[yog] <- round(ingredients$quantity[yog] / 8.64, 1)
+    ingredients$quantity[cf] <- round(ingredients$quantity[cf] / 8.46575, 1)
+
     # change units for flour and sour cream to cups
     ingredients$unit[flr] <- "cups"
     ingredients$unit[sc] <- "cups"
+    ingredients$unit[yog] <- "cups"
+    ingredients$unit[cf] <- "cups"
   }
   else {
     # make units round number
