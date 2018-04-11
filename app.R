@@ -17,7 +17,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(width = 3,
       p(a("Recipe ",
-          href = "https://www.seriouseats.com/2015/05/the-food-lab-how-to-make-the-best-buttermilk-pancakes.html"),
+          href = "https://www.seriouseats.com/recipes/2010/06/light-and-fluffy-pancakes-recipe.html"),
         "from ",
         a("J. Kenji López-Alt",
           href = "https://twitter.com/kenjilopezalt"),
@@ -50,11 +50,11 @@ ui <- fluidPage(
           ,selected="None"),
 
       radioButtons(inputId="fluid_unit"
-          ,label="Fluid Measurement",
+          ,label="Fluid Volume Measurement",
           choices=c("Cups","Fl. oz","mL")),
       radioButtons(inputId="weight_v_vol"
-          ,label="Weight or volume"
-          ,choices=c("Cups","Oz.","Grams")),
+          ,label="Weight or Volume"
+          ,choices=c("Cups","Oz.","Grams/Tbsp")),
 
       p(a("Source code", href = "https://github.com/newns92/kenji_hadley_pancakes"))
     ),

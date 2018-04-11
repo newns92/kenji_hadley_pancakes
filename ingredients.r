@@ -49,13 +49,16 @@ scale_ingredients <- function(ingredients, quantity = 1,
   ingredients$quantity <- ingredients$quantity * quantity
 
   # update ingredients baed on radiobuttons
-  if (weight_v_vol == "Grams") {
-    # get those ingredients currently in oz
+  if (weight_v_vol == "Grams/Tbsp") {
+    # get those ingredients currently in oz and grab butter
     in_oz <- ingredients$unit == "oz"
-    # convert from ounces to grams
+    in_tbsp <- ingredients$unit == "tbsp"
+    # convert from ounces and tbsp (just for butter) to grams
     ingredients$quantity[in_oz] <- round(ingredients$quantity[in_oz] * 28.3495231)
+    ingredients$quantity[in_tbsp] <- round(ingredients$quantity[in_tbsp] * 14)
     # reset units from oz to grams
     ingredients$unit[in_oz] <- "grams"
+    ingredients$unit[in_tbsp] <- "grams"
   }
   else if (weight_v_vol == "Cups") {
     # get the 2 ingredients currently in cups (flour, sour cream) and convert
