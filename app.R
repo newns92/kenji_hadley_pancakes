@@ -41,8 +41,10 @@ ui <- fluidPage(
       numericInput(inputId =  "quantity"
           ,label = "How many batches?"
           ,value = 1  # default value
-          ,min = 1),
+          ,min = .5
+          ,step = .5),
       p(tags$i("(1 batch makes sixteen 6-inch pancakes)")),
+      p(tags$i("(Or eight, foot-long pancakes, you animal)")),
 
       selectInput(inputId = "wet_base"
           ,label="Substitutions if not using buttermilk"
@@ -57,33 +59,42 @@ ui <- fluidPage(
           ,label="Weight or Volume"
           ,choices=c("Cups","Oz.","Grams/Tbsp")),
 
-      p(a("Source code", href = "https://github.com/newns92/kenji_hadley_pancakes"))
+      p(a("Source code", href = "https://github.com/newns92/kenji_hadley_pancakes")),
+      
+      p(a("Find", href = "http://stevenewns.netlify.com/"),
+        a("me", href = "https://twitter.com/s_newns92/"),
+        a("here.", href = "https://www.linkedin.com/in/stephen-newns/"))
     ),
 
     # output space layout
     mainPanel(width=9,
+      # table 1
       fluidRow(column(width = 3,
              h3("Dry Ingredients"),
              tableOutput(outputId = "dry_ingredients")),
+      # space between tables
       column(width = 1),
+      # table 2
       column(width = 4,
              h3("Wet Ingredients"),
              tableOutput(outputId = "wet_ingredients"))),
+      # instructions section
       fluidRow(h2("Instructions"),
         tags$ol(
           tags$li("Combine flour, baking powder, baking soda, salt, and sugar in a 
                     large bowl and whisk until homogenous (Mix will stay good for 3
                     months in an airtight container).")
-          ,tags$li("In a clean medium bowl, whisk egg whites until stiff peaks form.")
+          ,tags$li("In a clean medium bowl, whisk egg whites until",
+                    tags$a(href="https://www.thekitchn.com/a-visual-guide-soft-peaks-firm-115557", "stiff peaks form."))
           ,tags$li("In a large bowl, whisk egg yolks, buttermilk (or buttermilk 
                     substitute ingredients), and sour cream until homogenous.")
-          ,tags$li("Slowly drizzle in the melted butter while still whisking.")
-          ,tags$li("Carefully fold in the egg whites with a rubber spatula until 
-                    just combined.")
+          ,tags$li("Slowly drizzle the melted butter into the wet mixture while continuing to whisk.")
+          ,tags$li("Carefully ",tags$a(href="https://www.thekitchn.com/how-to-fold-egg-whites-or-whipped-cream-into-a-batter-cooking-lessons-from-the-kitchn-48281","fold the egg whites "),
+                    "into the wet mixture with a rubber spatula until just combined.")
           ,tags$li("Pour the wet mixture over the dry mix and fold until just 
                     combined (leave plenty of lumps).")
-          ,tags$li("Heat a large nonstick skillet or electric griddle over medium for 
-                    5 minutes, adding a small amount of butter or oil and spreading with
+          ,tags$li("Heat a large nonstick skillet or electric griddle over medium heat for 
+                    about 5 minutes, adding a small amount of butter or oil and spreading with
                     a paper towel until no visible butter or oil remains.")
           ,tags$li("Pour a 1/4-cup measurement of the batter into the skillet and cook 
                     until bubbles start to appear on top, and the bottoms are golden 

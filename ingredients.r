@@ -12,7 +12,7 @@ buttermilk <- data.frame(
   quantity = c(2, 12, 8, 4),
   unit = c("", "fl. oz", "oz", "tbsp"),
   ingredient = c("Large Eggs (yolks seperated)", "Buttermilk", "Sour Cream",
-                 "Unsalted Butter"),
+                 "Unsalted Butter, melted"),
   stringsAsFactors = FALSE
 )
 
@@ -20,7 +20,7 @@ yogurt <- data.frame(
   quantity = c(2, round(300 / 28), 5, 8, 4),
   unit = c("", "oz", "fl. oz", "oz", "tbsp"),
   ingredient = c("Large Eggs (yolks seperated)", "Yogurt", "Milk", "Sour Cream",
-                 "Unsalted Butter"),
+                 "Unsalted Butter, melted"),
   stringsAsFactors = FALSE
 )
 
@@ -28,7 +28,7 @@ sourCream <- data.frame(
   quantity = c(2, 4, 12, 4),
   unit = c("", "fl. oz", "oz", "tbsp"),
   ingredient = c("Large Eggs (yolks seperated)", "Milk", "Sour Cream",
-                 "Unsalted Butter"),
+                 "Unsalted Butter, melted"),
   stringsAsFactors = FALSE
 )
 
@@ -36,7 +36,7 @@ cremeFraiche <- data.frame(
   quantity = c(2, 6, 6, 8, 4),
   unit = c("", "fl. oz", "oz", "oz", "tbsp"),
   ingredient = c("Large Eggs (yolks seperated)", "Milk", "Creme Fraiche",
-                 "Sour Cream", "Unsalted Butter"),
+                 "Sour Cream", "Unsalted Butter, melted"),
   stringsAsFactors = FALSE
 )
 
@@ -50,15 +50,15 @@ scale_ingredients <- function(ingredients, quantity = 1,
 
   # update ingredients baed on radiobuttons
   if (weight_v_vol == "Grams/Tbsp") {
-    # get those ingredients currently in oz and grab butter
+    # get those ingredients currently in oz and get butter
     in_oz <- ingredients$unit == "oz"
-    in_tbsp <- ingredients$unit == "tbsp"
+    butter <- ingredients$ingredient == "Unsalted Butter, melted"
     # convert from ounces and tbsp (just for butter) to grams
     ingredients$quantity[in_oz] <- round(ingredients$quantity[in_oz] * 28.3495231)
-    ingredients$quantity[in_tbsp] <- round(ingredients$quantity[in_tbsp] * 14)
+    ingredients$quantity[butter] <- round(ingredients$quantity[butter] * 14)
     # reset units from oz to grams
     ingredients$unit[in_oz] <- "grams"
-    ingredients$unit[in_tbsp] <- "grams"
+    ingredients$unit[butter] <- "grams"
   }
   else if (weight_v_vol == "Cups") {
     # get the 2 ingredients currently in cups (flour, sour cream) and convert
