@@ -1,0 +1,13 @@
+name: BestButtermilkPancakes
+title: BestButtermilkPancakes
+username:
+account: snewns92
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 321188
+bundleId: 1316356
+url: https://snewns92.shinyapps.io/BestButtermilkPancakes/
+when: 1523572259.70355
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|testingBasics/app.R|testingBasics/ui.r
